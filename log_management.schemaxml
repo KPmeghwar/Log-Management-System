@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">blog_management_system</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="posts" view="colnames">
+<left>786</left>
+<top>37</top>
+<width>139</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `posts` (
+  `post_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_role_id` int(11) NOT NULL,
+  `post_title` varchar(100) NOT NULL,
+  `post_summary` text NOT NULL,
+  `post_description` longtext NOT NULL,
+  PRIMARY KEY (`post_id`),
+  KEY `user_role_id` (`user_role_id`),
+  CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_role_id`) REFERENCES `user_role` (`user_role_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="roles" view="colnames">
+<left>208</left>
+<top>265</top>
+<width>100</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `roles` (
+  `role_id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_type` varchar(10) NOT NULL,
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="user_role" view="colnames">
+<left>428</left>
+<top>108</top>
+<width>117</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `user_role` (
+  `user_role_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  PRIMARY KEY (`user_role_id`),
+  KEY `role_id` (`role_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="users" view="colnames">
+<left>158</left>
+<top>20</top>
+<width>132</width>
+<height>197</height>
+<sql_create_table>CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `fullname` varchar(20) NOT NULL,
+  `email` varchar(20) NOT NULL,
+  `user_password` varchar(20) NOT NULL,
+  `gender` enum('Male','Female') NOT NULL,
+  `login_time` datetime DEFAULT NULL,
+  `logout_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
